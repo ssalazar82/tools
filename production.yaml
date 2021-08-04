@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: delivery-management-route-integration-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: delivery-management-route-integration-api
+  template:
+    metadata:
+      labels:
+        app: delivery-management-route-integration-api
+    spec:
+      containers:
+      - name: delivery-management-route-integration-api
+        image: acrsatrack.azurecr.io/delivery-management-route-integration-api:3.10.0
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "#{Environment}#"
+        - name: LOGGING_LEVEL
+          value: "#{LoggingLevel}#"
+        resources:
+          requests:
+            cpu: 10m
+            memory: 150Mi
+          limits:
+            cpu: 30m
+            memory: 200Mi
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: registrosatrack
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: delivery-management-route-integration-api
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: delivery-management-route-integration-api
