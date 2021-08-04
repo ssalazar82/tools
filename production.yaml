@@ -17,9 +17,9 @@ spec:
         image: acrsatrack.azurecr.io/delivery-management-route-integration-api:3.10.0
         env:
         - name: ASPNETCORE_ENVIRONMENT
-          value: "#{Environment}#"
+          value: "Production"
         - name: LOGGING_LEVEL
-          value: "#{LoggingLevel}#"
+          value: "Error"
         resources:
           requests:
             cpu: 10m
