@@ -4,9 +4,14 @@ metadata:
   name: delivery-management-route-integration-api-ingress
   namespace: delivery-management
   annotations:
+    kubernetes.io/ingress.class: nginx-management
     nginx.ingress.kubernetes.io/rewrite-target: /$1
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
+  tls:
+  - hosts:
+    - routeintegrationapi.satrack.com
+    secretName: delivery-management
   rules:
   - host: routeintegrationapi.satrack.com
     http:
@@ -15,4 +20,3 @@ spec:
             serviceName: delivery-management-route-integration-api
             servicePort: 80
         path: /(.*)
-  
